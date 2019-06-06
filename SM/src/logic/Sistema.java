@@ -1,6 +1,8 @@
 
 package logic;
 
+import java.util.regex.Pattern;
+
 import listas.*;
 import logic.Retorno.Resultado;
 
@@ -9,7 +11,7 @@ public class Sistema implements ISistema {
 	private int MAX_CANT_PALABRAS_X_LINEA;
 
 	private Lista<ILista<String>> texto = new Lista<ILista<String>>(); // Unordered List
-	private Lista<String> diccionario = new Lista<String>(); // Ordered List
+	private Lista<String> diccionario = new ListaOrd<String>(); // Ordered List
 
 	public Sistema(int MAX_CANT_PALABRAS_X_LINEA) {
 		this.MAX_CANT_PALABRAS_X_LINEA = MAX_CANT_PALABRAS_X_LINEA;
@@ -88,15 +90,15 @@ public class Sistema implements ISistema {
 		String text = "";
 
 		for (ILista<String> l : texto) {
-			text += numero_linea++ + ": ";
+			text += numero_linea++ + ":";
 			for (String s : l) {
-				text += s;
+				text += " " + s;
 			}
 			text += "\n";
 		}
 
 		if (numero_linea == 1) {
-			return new Retorno(Resultado.OK, 0, "Texto vacío");
+			return new Retorno(Resultado.OK, 0, "Texto vacÃ­o");
 		}
 
 		return new Retorno(Resultado.OK, 0, text);
@@ -160,33 +162,33 @@ public class Sistema implements ISistema {
 
 	@Override
 	public Retorno BorrarPalabra(int posicionLinea, int posicionPalabra) {
-		if (posicionLinea < 0 || posicionLinea > texto.length() + 1) {
+		if (posicionLinea < 1 || posicionLinea > texto.length() +1) {
 			return new Retorno(Resultado.ERROR_1); // La posicion no es valida
 		}
 
-		ILista<String> linea = texto.getObject(posicionLinea);
+		ILista<String> linea = texto.getObject(posicionLinea-1);
 
-		if (posicionPalabra < 0 || posicionPalabra > linea.length()) {
+		if (posicionPalabra < 1 || posicionPalabra > linea.length()) {
 			return new Retorno(Resultado.ERROR_2); // La posicion de la palabra
 													// no es valida
 		}
 
-		linea.deleteAtPosition(posicionPalabra);
+		linea.deleteAtPosition(posicionPalabra-1);
 
 		return new Retorno(Resultado.OK);
 	}
 
 	@Override
 	public Retorno ImprimirLinea(int posicionLinea) {
-		if (posicionLinea < 0 || posicionLinea > texto.length() + 1) {
+		if (posicionLinea < 1 || posicionLinea > texto.length() + 1) {
 			return new Retorno(Resultado.ERROR_1); // La posicion no es valida
 		}
 
-		ILista<String> linea = texto.getObject(posicionLinea);
-		String texto_linea = "";
+		ILista<String> linea = texto.getObject(posicionLinea-1);
+		String texto_linea = posicionLinea + ":";
 
 		for (String s : linea) {
-			texto_linea += s;
+			texto_linea += " " + s;
 		}
 
 		return new Retorno(Resultado.OK, 0, texto_linea);
@@ -235,14 +237,17 @@ public class Sistema implements ISistema {
 		
 		int index_line = 1;
 		for (ILista<String> linea_texto : texto) {
-			texto_i += index_line + ": ";
+			texto_i += index_line + ":";
+			
 			for (String p_t : linea_texto) {
 				if (!diccionario.exists(p_t)) {
-					texto_i += p_t + " ";
+					texto_i += " " + p_t;
 				}
 				
 			}
+			
 			texto_i += "\n";
+			
 			index_line++;
 		}
 		

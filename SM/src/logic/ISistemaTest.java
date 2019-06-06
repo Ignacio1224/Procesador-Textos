@@ -188,7 +188,6 @@ public class ISistemaTest {
 		assertEquals(Resultado.ERROR_3, ret.resultado);
 	}
 	
-	// Esta hecho hasta ak!
 	@Test
 	public void testInsertarPalabraYDesplazar() {
 		Retorno ret = sis.crearSistemaMensajes();
@@ -199,35 +198,144 @@ public class ISistemaTest {
 		
 		assertEquals(Resultado.OK, ret.resultado);
 	}
+	
+	@Test
+	public void testInsertarPalabraYDesplazarMAL1() {
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.InsertarLinea();
+		ret = sis.InsertarPalabraYDesplazar(15, 1, "Palabra1");
+		
+		assertEquals(Resultado.ERROR_1, ret.resultado);
+	}
+	
+	@Test
+	public void testInsertarPalabraYDesplazarMAL2() {
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.InsertarLinea();
+		ret = sis.InsertarPalabraYDesplazar(1, 56, "Palabra1");
+		
+		assertEquals(Resultado.ERROR_2, ret.resultado);
+	}
 
 	@Test
 	public void testBorrarPalabra() {
-		fail("Not yet implemented");
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.InsertarLinea();
+		ret = sis.InsertarPalabraYDesplazar(1, 1, "Palabra1");
+		ret = sis.InsertarPalabraYDesplazar(1, 2, "Palabra3");
+		ret = sis.InsertarPalabraYDesplazar(1, 2, "Palabra2");
+		ret = sis.BorrarPalabra(1, 1);
+		
+		assertEquals(Resultado.OK, ret.resultado);
+	}
+	
+	@Test
+	public void testBorrarPalabraMAL1() {
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.InsertarLinea();
+		ret = sis.InsertarPalabraYDesplazar(1, 1, "Palabra1");
+		ret = sis.InsertarPalabraYDesplazar(1, 2, "Palabra3");
+		ret = sis.InsertarPalabraYDesplazar(1, 2, "Palabra2");
+		ret = sis.BorrarPalabra(0, 1);
+		
+		assertEquals(Resultado.ERROR_1, ret.resultado);
+	}
+	
+	@Test
+	public void testBorrarPalabraMAL2() {
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.InsertarLinea();
+		ret = sis.InsertarPalabraYDesplazar(1, 1, "Palabra1");
+		ret = sis.InsertarPalabraYDesplazar(1, 2, "Palabra3");
+		ret = sis.InsertarPalabraYDesplazar(1, 2, "Palabra2");
+		ret = sis.BorrarPalabra(1, 3);
+		
+		assertEquals(Resultado.ERROR_2, ret.resultado);
 	}
 
 	@Test
 	public void testImprimirLinea() {
-		fail("Not yet implemented");
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.InsertarLinea();
+		ret = sis.InsertarPalabraYDesplazar(1, 1, "Palabra1");
+		ret = sis.InsertarPalabraYDesplazar(1, 2, "Palabra3");
+		ret = sis.InsertarPalabraYDesplazar(1, 2, "Palabra2");
+		ret = sis.ImprimirLinea(1);
+		
+		assertEquals(Resultado.OK, ret.resultado);
 	}
 
+	@Test
+	public void testImprimirLineaMAL1() {
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.InsertarLinea();
+		ret = sis.InsertarPalabraYDesplazar(1, 1, "Palabra1");
+		ret = sis.InsertarPalabraYDesplazar(1, 2, "Palabra3");
+		ret = sis.InsertarPalabraYDesplazar(1, 2, "Palabra2");
+		ret = sis.ImprimirLinea(7);
+		
+		assertEquals(Resultado.ERROR_1, ret.resultado);
+	}
+	
 	@Test
 	public void testIngresarPalabraDiccionario() {
-		fail("Not yet implemented");
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.IngresarPalabraDiccionario("Palabra1");
+
+		assertEquals(Resultado.OK, ret.resultado);
 	}
 
 	@Test
+	public void testIngresarPalabraDiccionarioMAL() {
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.IngresarPalabraDiccionario("Palabra1");
+		ret = sis.IngresarPalabraDiccionario("Palabra1");
+
+		assertEquals(Resultado.ERROR_1, ret.resultado);
+	}
+	
+	@Test
 	public void testBorrarPalabraDiccionario() {
-		fail("Not yet implemented");
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.IngresarPalabraDiccionario("Palabra1");
+		ret = sis.BorrarPalabraDiccionario("Palabra1");
+
+		assertEquals(Resultado.OK, ret.resultado);
+	}
+	
+	@Test
+	public void testBorrarPalabraDiccionarioMAL() {
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.IngresarPalabraDiccionario("Palabra1");
+		ret = sis.BorrarPalabraDiccionario("Palabra 1");
+
+		assertEquals(Resultado.ERROR_1, ret.resultado);
 	}
 
 	@Test
 	public void testImprimirDiccionario() {
-		fail("Not yet implemented");
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.IngresarPalabraDiccionario("Palabra1");
+		ret = sis.IngresarPalabraDiccionario("Palabra2");
+		ret = sis.IngresarPalabraDiccionario("Palabra3");
+		ret = sis.ImprimirDiccionario();
+		
+		assertEquals(Resultado.OK, ret.resultado);
 	}
 
 	@Test
 	public void testImprimirTextoIncorrecto() {
-		fail("Not yet implemented");
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.InsertarLinea();
+		ret = sis.InsertarPalabraEnLinea(1, 1, "Palabra1");
+		ret = sis.InsertarLinea();
+		ret = sis.InsertarPalabraEnLinea(2, 1, "Palabra2");
+		ret = sis.InsertarLinea();
+		
+		ret = sis.IngresarPalabraDiccionario("Palabra1");
+		ret = sis.ImprimirTextoIncorrecto();
+		
+		assertEquals(Resultado.OK, ret.resultado);
 	}
 
 }
