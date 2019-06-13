@@ -45,14 +45,14 @@ public class ISistemaTest {
 	}
 	
 	@Test
-	public void testInsertarLineaEnPosicionMAL1() {
+	public void testInsertarLineaEnPosicionFueraDeRango() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLineaEnPosicion(486);
 		assertEquals(Resultado.ERROR_1, ret.resultado);
 	}
 	
 	@Test
-	public void testInsertarLineaEnPosicionMAL2() {
+	public void testInsertarLineaEnPosicionIgualA0() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLineaEnPosicion(0);
 		assertEquals(Resultado.ERROR_1, ret.resultado);
@@ -67,7 +67,7 @@ public class ISistemaTest {
 	}
 
 	@Test
-	public void testBorrarLineaMAL1() {
+	public void testBorrarLineaIgualA0() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLinea();
 		ret = sis.BorrarLinea(0);
@@ -75,7 +75,7 @@ public class ISistemaTest {
 	}
 	
 	@Test
-	public void testBorrarLineaMAL2() {
+	public void testBorrarLineaMayorRango() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLinea();
 		ret = sis.BorrarLinea(6541);
@@ -104,12 +104,12 @@ public class ISistemaTest {
 	}
 	
 	@Test
-	public void testBorrarOcurrenciasPalabraEnTextoMAL1() {
+	public void testBorrarOcurrenciasPalabraEnTextoSinOcurrencia() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLinea();
 		ret = sis.InsertarLinea();
 		ret = sis.InsertarPalabraEnLinea(1, 1, "PEPE");
-		ret = sis.InsertarPalabraEnLinea(2, 1, "CACA");
+		ret = sis.InsertarPalabraEnLinea(2, 1, "SOSO");
 		ret = sis.InsertarPalabraEnLinea(2, 2, "Sape");
 		ret = sis.BorrarOcurrenciasPalabraEnTexto("ASASDASDSAD");
 		
@@ -155,18 +155,7 @@ public class ISistemaTest {
 	}
 	
 	@Test
-	public void testInsertarPalabraEnLineaMAL1() {
-		Retorno ret = sis.crearSistemaMensajes();
-		ret = sis.InsertarLinea();
-		ret = sis.InsertarPalabraEnLinea(1, 1, "Palabra1");
-		ret = sis.InsertarLinea();
-		ret = sis.InsertarPalabraEnLinea(1, 3, "Palabra2");
-		
-		assertEquals(Resultado.ERROR_2, ret.resultado);
-	}
-	
-	@Test
-	public void testInsertarPalabraEnLineaMAL2() {
+	public void testInsertarPalabraEnLineaFueraDeRango() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLinea();
 		ret = sis.InsertarPalabraEnLinea(1, 1, "Palabra1");
@@ -175,9 +164,20 @@ public class ISistemaTest {
 		
 		assertEquals(Resultado.ERROR_1, ret.resultado);
 	}
+	
+	@Test
+	public void testInsertarPalabraEnLineaSinPalabraEnPosMayorA1() {
+		Retorno ret = sis.crearSistemaMensajes();
+		ret = sis.InsertarLinea();
+		ret = sis.InsertarPalabraEnLinea(1, 1, "Palabra1");
+		ret = sis.InsertarLinea();
+		ret = sis.InsertarPalabraEnLinea(1, 3, "Palabra2");
+		
+		assertEquals(Resultado.ERROR_2, ret.resultado);
+	}
 
 	@Test
-	public void testInsertarPalabraEnLineaMAL3() {
+	public void testInsertarPalabraEnLineaPalabraFueraDeRango() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLinea();
 		ret = sis.InsertarPalabraEnLinea(1, 1, "Palabra1");
@@ -200,7 +200,7 @@ public class ISistemaTest {
 	}
 	
 	@Test
-	public void testInsertarPalabraYDesplazarMAL1() {
+	public void testInsertarPalabraYDesplazarLineaFueraDeRango() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLinea();
 		ret = sis.InsertarPalabraYDesplazar(15, 1, "Palabra1");
@@ -209,7 +209,7 @@ public class ISistemaTest {
 	}
 	
 	@Test
-	public void testInsertarPalabraYDesplazarMAL2() {
+	public void testInsertarPalabraYDesplazarPalabraFueraDeRango() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLinea();
 		ret = sis.InsertarPalabraYDesplazar(1, 56, "Palabra1");
@@ -230,7 +230,7 @@ public class ISistemaTest {
 	}
 	
 	@Test
-	public void testBorrarPalabraMAL1() {
+	public void testBorrarPalabraLineaFueraDeRango() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLinea();
 		ret = sis.InsertarPalabraYDesplazar(1, 1, "Palabra1");
@@ -242,7 +242,7 @@ public class ISistemaTest {
 	}
 	
 	@Test
-	public void testBorrarPalabraMAL2() {
+	public void testBorrarPalabraFueraDeRango() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLinea();
 		ret = sis.InsertarPalabraYDesplazar(1, 1, "Palabra1");
@@ -266,7 +266,7 @@ public class ISistemaTest {
 	}
 
 	@Test
-	public void testImprimirLineaMAL1() {
+	public void testImprimirLineaFueraDeRango() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLinea();
 		ret = sis.InsertarPalabraYDesplazar(1, 1, "Palabra1");
@@ -286,7 +286,7 @@ public class ISistemaTest {
 	}
 
 	@Test
-	public void testIngresarPalabraDiccionarioMAL() {
+	public void testIngresarPalabraDiccionarioPalabraYaExistente() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.IngresarPalabraDiccionario("Palabra1");
 		ret = sis.IngresarPalabraDiccionario("Palabra1");
@@ -304,7 +304,7 @@ public class ISistemaTest {
 	}
 	
 	@Test
-	public void testBorrarPalabraDiccionarioMAL() {
+	public void testBorrarPalabraDiccionarioPalabranoExistente() {
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.IngresarPalabraDiccionario("Palabra1");
 		ret = sis.BorrarPalabraDiccionario("Palabra 1");

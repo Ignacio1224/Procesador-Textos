@@ -7,98 +7,83 @@ public class Lista<T> implements ILista<T> {
 	protected NodoLista<T> _inicio;
 	protected int _cant;
 
-
 	@Override
 	public void addAtPosition(T dato, int pos) {
-		if(_inicio == null || pos == 0)
-		{
+		if (_inicio == null || pos == 0) {
 			_inicio = new NodoLista<T>(dato, _inicio);
 		} else {
 			NodoLista<T> aux = _inicio;
-			while(aux.getSig()!=null && pos > 1)
-			{
+			while (aux.getSig() != null && pos > 1) {
 				aux = aux.getSig();
 			}
 			aux.setSig(new NodoLista<T>(dato, aux.getSig()));
 		}
 		_cant++;
 	}
-	
+
 	@Override
 	public void addFirst(T dato) {
 		_inicio = new NodoLista<T>(dato, _inicio);
 		_cant++;
 	}
-	
+
 	@Override
 	public void addInOrder(T dato) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	@Override
 	public void addLast(T dato) {
 		if (_inicio == null)
-			_inicio = new NodoLista<T>(dato, _inicio);//insertarPpio(dato);
+			_inicio = new NodoLista<T>(dato, _inicio);
 		else {
 			NodoLista<T> aux = _inicio;
 			while (aux.getSig() != null) {
 				aux = aux.getSig();
 			}
-			NodoLista<T> nuevo = new NodoLista<T>(dato);
-			aux.setSig(nuevo);
-			// O más cortito:
-			// aux.setSig(new NodoLista<T>(dato));
+			aux.setSig(new NodoLista<T>(dato));
 		}
 		_cant++;
 	}
 
 	@Override
 	public void delete(T dato) {
-		if(dato.equals(_inicio.getDato()))
+		if (dato.equals(_inicio.getDato()))
 			_inicio = _inicio.getSig();
-		else
-		{
+		else {
 			NodoLista<T> aux = _inicio;
-			while(aux.getSig().getDato() != dato)
+			while (aux.getSig().getDato() != dato)
 				aux = aux.getSig();
 			aux.setSig(aux.getSig().getSig());
 		}
-		_cant--;			
+		_cant--;
 	}
 
 	@Override
 	public void deleteAll(T dato) {
-		while(_inicio != null && _inicio.getDato().equals(dato)){
+		while (_inicio != null && _inicio.getDato().equals(dato)) {
 			_inicio = _inicio.getSig();
 			_cant--;
 		}
-		if(_inicio != null)
-		{
+		if (_inicio != null) {
 			NodoLista<T> aux = _inicio;
-			while(aux.getSig() != null)
-			{
-				if(aux.getSig().getDato().equals(dato))
-				{
+			while (aux.getSig() != null) {
+				if (aux.getSig().getDato().equals(dato)) {
 					aux.setSig(aux.getSig().getSig());
 					_cant--;
-				}
-				else
+				} else
 					aux = aux.getSig();
 			}
 		}
 	}
-	
+
 	@Override
 	public void deleteAtPosition(int pos) {
-		if(pos == 0)
-		{
-			_inicio = _inicio.getSig(); //borrarPpio();
-		}
-		else
-		{
+		if (pos == 0) {
+			_inicio = _inicio.getSig();
+		} else {
 			NodoLista<T> aux = _inicio;
-			while(pos > 1)
-			{
+			while (pos > 1) {
 				aux = aux.getSig();
 				pos--;
 			}
@@ -106,7 +91,7 @@ public class Lista<T> implements ILista<T> {
 		}
 		_cant--;
 	}
-	
+
 	@Override
 	public void deleteFirst() {
 		_inicio = _inicio.getSig();
@@ -115,31 +100,30 @@ public class Lista<T> implements ILista<T> {
 
 	@Override
 	public void deleteLast() {
-		if(_inicio.getSig() == null)
-		{
-			_inicio = null; //borrarPpio();
+		if (_inicio.getSig() == null) {
+			_inicio = null;
 		} else {
 			NodoLista<T> aux = _inicio;
-			while(aux.getSig().getSig() != null)
+			while (aux.getSig().getSig() != null)
 				aux = aux.getSig();
 			aux.setSig(null);
 		}
 		_cant--;
 	}
-	
+
 	public void empty() {
-		while(!isEmpty()) {
+		while (!isEmpty()) {
 			deleteFirst();
 		}
 	}
-	
+
 	private boolean existeRec(T dato, NodoLista<T> nodo) {
-		if(nodo == null)
+		if (nodo == null)
 			return false;
 		else
 			return dato.equals(nodo.getDato()) || existeRec(dato, nodo.getSig());
 	}
-	
+
 	@Override
 	public boolean exists(T dato) {
 		return existeRec(dato, _inicio);
@@ -147,30 +131,29 @@ public class Lista<T> implements ILista<T> {
 
 	public T getObject(int pos) {
 		NodoLista<T> aux = _inicio;
-		
-		while(pos > 0)
-		{
+
+		while (pos > 0) {
 			aux = aux.getSig();
 			pos--;
 		}
 
 		return aux.getDato();
 	}
-	
+
 	public boolean isEmpty() {
 		return _cant == 0;
 	}
-	
+
 	public boolean isFull(int max) {
 		return _cant > max;
 	}
-	
+
 	@Override
 	public Iterator<T> iterator() {
 		return new Iterator<T>() {
 
 			NodoLista<T> aux = _inicio;
-			
+
 			@Override
 			public boolean hasNext() {
 				return aux != null;
@@ -184,7 +167,7 @@ public class Lista<T> implements ILista<T> {
 			}
 		};
 	}
-	
+
 	@Override
 	public int length() {
 		return _cant;
@@ -193,14 +176,10 @@ public class Lista<T> implements ILista<T> {
 	@Override
 	public T recover(T dato) {
 		NodoLista<T> aux = _inicio;
-		while(aux != null)
-		{
-			if(dato.equals(aux.getDato()))
-			{
+		while (aux != null) {
+			if (dato.equals(aux.getDato())) {
 				return aux.getDato();
-			}
-			else
-			{
+			} else {
 				aux = aux.getSig();
 			}
 		}
@@ -208,13 +187,21 @@ public class Lista<T> implements ILista<T> {
 	}
 
 	@Override
-	public void show() {
+	public String show() {
 		NodoLista<T> aux = _inicio;
+		String s = "";
+
 		while (aux != null) {
-			System.out.print(aux.getDato() + " ");
+			s += aux.getDato() + " ";
 			aux = aux.getSig();
 		}
-		System.out.println();
+		
+		return s;
+	}
+
+	@Override
+	public String toString() {
+		return show();
 	}
 
 }

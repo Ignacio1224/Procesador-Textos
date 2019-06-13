@@ -6,21 +6,21 @@ public interface ILista<T> extends Iterable<T> {
 	
 	public void addLast(T dato);
 	
-	//Pre: pos>=0
+	// Pre: pos > -1
 	public void addAtPosition(T dato, int pos);
 	
 	public void addInOrder(T dato);
 	
-	//Pre: !esVacia()
+	// Pre: !esVacia()
 	public void deleteFirst();
 
-	//Pre: !esVacia()	
+	// Pre: !esVacia()	
 	public void deleteLast();
 	
-	//Pre: !esVacia && pos < largo
+	// Pre: !esVacia && pos < largo
 	public void deleteAtPosition(int pos);
 	
-	//Pre: existe(dato)
+	// Pre: existe(dato)
 	public void delete(T dato);
 	
 	public void deleteAll(T dato);
@@ -29,6 +29,7 @@ public interface ILista<T> extends Iterable<T> {
 
 	public boolean exists(T dato);
 	
+	// Pre: pos > -1 && pos < largo && !esVacia()
 	public T getObject(int pos);
 	
 	public boolean isEmpty();
@@ -39,6 +40,9 @@ public interface ILista<T> extends Iterable<T> {
 		
 	public T recover(T dato);
 	
-	public void show();
+	public String show();
+	
+	@Override
+	public String toString();
 	
 }
