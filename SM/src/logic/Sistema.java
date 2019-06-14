@@ -1,8 +1,6 @@
 
 package logic;
 
-import java.util.regex.Pattern;
-
 import listas.*;
 import logic.Retorno.Resultado;
 
@@ -30,6 +28,10 @@ public class Sistema implements ISistema {
 		}
 		
 		texto.empty();
+		texto = null;
+		
+		diccionario.empty();
+		diccionario = null;
 		
 		return new Retorno(Resultado.OK);
 	}
@@ -65,6 +67,10 @@ public class Sistema implements ISistema {
 
 	@Override
 	public Retorno BorrarTodo() {
+		for (ILista<String> linea : texto) {
+			linea.empty();
+		}
+		
 		texto.empty();
 		return new Retorno(Resultado.OK);
 	}
@@ -92,20 +98,21 @@ public class Sistema implements ISistema {
 	public Retorno ImprimirTexto() {
 		int numero_linea = 1;
 		String text = "";
-
-		for (ILista<String> l : texto) {
-			text += numero_linea++ + ":";
-			for (String s : l) {
-				text += " " + s;
+		if (texto != null) {
+			for (ILista<String> l : texto) {
+				text += numero_linea++ + ":";
+				for (String s : l) {
+					text += " " + s;
+				}
+				text += "\n";
 			}
-			text += "\n";
 		}
-
+		
 		if (numero_linea == 1) {
 			return new Retorno(Resultado.OK, 0, "Texto vacío");
 		}
-
 		return new Retorno(Resultado.OK, 0, text);
+
 	}
 
 	@Override
@@ -235,25 +242,26 @@ public class Sistema implements ISistema {
 
 	@Override
 	public Retorno ImprimirTextoIncorrecto() {
+		int index_line = 1;
 
 		String texto_i = "";
 		
-		int index_line = 1;
-		for (ILista<String> linea_texto : texto) {
-			texto_i += index_line + ":";
-			
-			for (String p_t : linea_texto) {
-				if (!diccionario.exists(p_t)) {
-					texto_i += " " + p_t;
+		if (diccionario != null)
+			for (ILista<String> linea_texto : texto) {
+				texto_i += index_line + ":";
+				
+				for (String p_t : linea_texto) {
+					if (!diccionario.exists(p_t)) {
+						texto_i += " " + p_t;
+					}
+					
 				}
 				
+				texto_i += "\n";
+				
+				index_line++;
 			}
 			
-			texto_i += "\n";
-			
-			index_line++;
-		}
-		
 		
 		if (index_line == 1) {
 			return new Retorno(Resultado.OK, 0, "No hay errores");
