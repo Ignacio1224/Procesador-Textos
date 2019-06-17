@@ -228,7 +228,7 @@ public class ISistemaTest {
 		ret = sis.InsertarPalabraEnLinea(1, 2, "Palabra3");
 		ret = sis.InsertarPalabraEnLinea(2, 1, "Palabra2");
 		ret = sis.BorrarPalabra(1, 1);
-		ret = sis.BorrarPalabra(1, 1);
+//		ret = sis.BorrarPalabra(1, 1);
 		aux_ret = sis.ImprimirTexto();
 		
 		assertEquals(Resultado.OK, ret.resultado);
