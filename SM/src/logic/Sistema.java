@@ -1,6 +1,8 @@
 
 package logic;
 
+import java.util.regex.Pattern;
+
 import listas.*;
 import logic.Retorno.Resultado;
 
@@ -8,8 +10,8 @@ public class Sistema implements ISistema {
 
 	private int MAX_CANT_PALABRAS_X_LINEA;
 
-	private Lista<ILista<String>> texto = new Lista<ILista<String>>(); // Unordered List
-	private Lista<String> diccionario = new ListaOrd<String>(); // Ordered List
+	private Lista<ILista<String>> texto; // Unordered List
+	private ListaOrd<String> diccionario; // Ordered List
 
 	public Sistema(int MAX_CANT_PALABRAS_X_LINEA) {
 		this.MAX_CANT_PALABRAS_X_LINEA = MAX_CANT_PALABRAS_X_LINEA;
@@ -18,6 +20,7 @@ public class Sistema implements ISistema {
 	@Override
 	public Retorno crearSistemaMensajes() {
 		this.texto = new Lista<ILista<String>>();
+		this.diccionario = new ListaOrd<String>();
 		return new Retorno(Resultado.OK);
 	}
 
@@ -29,7 +32,6 @@ public class Sistema implements ISistema {
 		
 		texto.empty();
 		texto = null;
-		
 		diccionario.empty();
 		diccionario = null;
 		
@@ -70,7 +72,6 @@ public class Sistema implements ISistema {
 		for (ILista<String> linea : texto) {
 			linea.empty();
 		}
-		
 		texto.empty();
 		return new Retorno(Resultado.OK);
 	}
@@ -98,21 +99,20 @@ public class Sistema implements ISistema {
 	public Retorno ImprimirTexto() {
 		int numero_linea = 1;
 		String text = "";
-		if (texto != null) {
-			for (ILista<String> l : texto) {
-				text += numero_linea++ + ":";
-				for (String s : l) {
-					text += " " + s;
-				}
-				text += "\n";
+
+		for (ILista<String> l : texto) {
+			text += numero_linea++ + ":";
+			for (String s : l) {
+				text += " " + s;
 			}
+			text += "\n";
 		}
-		
+
 		if (numero_linea == 1) {
 			return new Retorno(Resultado.OK, 0, "Texto vacío");
 		}
-		return new Retorno(Resultado.OK, 0, text);
 
+		return new Retorno(Resultado.OK, 0, text);
 	}
 
 	@Override
@@ -185,6 +185,16 @@ public class Sistema implements ISistema {
 
 		linea.deleteAtPosition(posicionPalabra-1);
 
+		//CHEKIAR
+		while(posicionLinea <= (texto.length())){
+			linea.addLast(texto.getObject(++posicionLinea).getObject(1));
+			if(posicionLinea == texto.length()){
+				linea.deleteFirst();
+			}else{
+				linea = texto.getObject(posicionLinea);
+			}
+		}
+		
 		return new Retorno(Resultado.OK);
 	}
 
@@ -206,7 +216,7 @@ public class Sistema implements ISistema {
 
 	@Override
 	public Retorno IngresarPalabraDiccionario(String palabraAIngresar) {
-
+		
 		if (diccionario.exists(palabraAIngresar)) {
 			return new Retorno(Resultado.ERROR_1);
 		}
@@ -242,26 +252,25 @@ public class Sistema implements ISistema {
 
 	@Override
 	public Retorno ImprimirTextoIncorrecto() {
-		int index_line = 1;
 
 		String texto_i = "";
 		
-		if (diccionario != null)
-			for (ILista<String> linea_texto : texto) {
-				texto_i += index_line + ":";
-				
-				for (String p_t : linea_texto) {
-					if (!diccionario.exists(p_t)) {
-						texto_i += " " + p_t;
-					}
-					
+		int index_line = 1;
+		for (ILista<String> linea_texto : texto) {
+			texto_i += index_line + ":";
+			
+			for (String p_t : linea_texto) {
+				if (!diccionario.exists(p_t)) {
+					texto_i += " " + p_t;
 				}
 				
-				texto_i += "\n";
-				
-				index_line++;
 			}
 			
+			texto_i += "\n";
+			
+			index_line++;
+		}
+		
 		
 		if (index_line == 1) {
 			return new Retorno(Resultado.OK, 0, "No hay errores");
