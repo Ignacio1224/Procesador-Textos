@@ -11,6 +11,7 @@ public class ISistemaTest {
 	
 	private ISistema sis;
 
+	
 	@Before
 	public void setUp() throws Exception {
 		sis = new Sistema(2);
@@ -190,6 +191,7 @@ public class ISistemaTest {
 	
 	@Test
 	public void testInsertarPalabraYDesplazar() {
+		sis = new Sistema(3);
 		Retorno ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLinea();
 		ret = sis.InsertarPalabraYDesplazar(1, 1, "Palabra1");
@@ -219,12 +221,15 @@ public class ISistemaTest {
 
 	@Test
 	public void testBorrarPalabra() {
-		Retorno ret = sis.crearSistemaMensajes();
+		Retorno ret = sis.crearSistemaMensajes(), aux_ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLinea();
-		ret = sis.InsertarPalabraYDesplazar(1, 1, "Palabra1");
-		ret = sis.InsertarPalabraYDesplazar(1, 2, "Palabra3");
-		ret = sis.InsertarPalabraYDesplazar(1, 2, "Palabra2");
+		ret = sis.InsertarLinea();
+		ret = sis.InsertarPalabraEnLinea(1, 1, "Palabra1");
+		ret = sis.InsertarPalabraEnLinea(1, 2, "Palabra3");
+		ret = sis.InsertarPalabraEnLinea(2, 1, "Palabra2");
 		ret = sis.BorrarPalabra(1, 1);
+		ret = sis.BorrarPalabra(1, 1);
+		aux_ret = sis.ImprimirTexto();
 		
 		assertEquals(Resultado.OK, ret.resultado);
 	}

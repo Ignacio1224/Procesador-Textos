@@ -1,8 +1,6 @@
 
 package logic;
 
-import java.util.regex.Pattern;
-
 import listas.*;
 import logic.Retorno.Resultado;
 
@@ -58,7 +56,7 @@ public class Sistema implements ISistema {
 
 	@Override
 	public Retorno BorrarLinea(int posicionLinea) {
-		if (posicionLinea < 1 || posicionLinea > texto.length()+1) {
+		if (posicionLinea < 1 || posicionLinea >= texto.length() +1) {
 			return new Retorno(Resultado.ERROR_1);
 		}
 		
@@ -117,7 +115,7 @@ public class Sistema implements ISistema {
 
 	@Override
 	public Retorno InsertarPalabraEnLinea(int posicionLinea, int posicionPalabra, String palabraAIngresar) {
-		if (posicionLinea < 1 || posicionLinea > texto.length() + 1) {
+		if (posicionLinea < 1 || posicionLinea >= texto.length() + 1) {
 			return new Retorno(Resultado.ERROR_1);
 		}
 
@@ -127,7 +125,7 @@ public class Sistema implements ISistema {
 			return new Retorno(Resultado.ERROR_2);
 		}
 		
-		if (linea.isFull(MAX_CANT_PALABRAS_X_LINEA-1)) {
+		if (linea.isFull(MAX_CANT_PALABRAS_X_LINEA -1)) {
 			return new Retorno(Resultado.ERROR_3);
 		}
 					
@@ -140,13 +138,13 @@ public class Sistema implements ISistema {
 	@Override
 	public Retorno InsertarPalabraYDesplazar(int posicionLinea, int posicionPalabra, String palabraAIngresar) {
 
-		if (posicionLinea < 1 || posicionLinea > texto.length() + 1) {
+		if (posicionLinea < 1 || posicionLinea >= texto.length() + 1) {
 			return new Retorno(Resultado.ERROR_1);
 		}
 
 		ILista<String> linea = texto.getObject(posicionLinea-1);
 
-		if (posicionPalabra < 1 || posicionPalabra > MAX_CANT_PALABRAS_X_LINEA) {
+		if (posicionPalabra < 1 || posicionPalabra >= MAX_CANT_PALABRAS_X_LINEA) {
 			return new Retorno(Resultado.ERROR_2);
 		}
 
@@ -173,7 +171,7 @@ public class Sistema implements ISistema {
 
 	@Override
 	public Retorno BorrarPalabra(int posicionLinea, int posicionPalabra) {
-		if (posicionLinea < 1 || posicionLinea > texto.length() +1) {
+		if (posicionLinea < 1 || posicionLinea >= texto.length() +1) {
 			return new Retorno(Resultado.ERROR_1);
 		}
 
@@ -184,15 +182,9 @@ public class Sistema implements ISistema {
 		}
 
 		linea.deleteAtPosition(posicionPalabra-1);
-
-		//CHEKIAR
-		while(posicionLinea <= (texto.length())){
-			linea.addLast(texto.getObject(++posicionLinea).getObject(1));
-			if(posicionLinea == texto.length()){
-				linea.deleteFirst();
-			}else{
-				linea = texto.getObject(posicionLinea);
-			}
+		
+		if (linea.isEmpty()) {
+			texto.deleteAtPosition(posicionLinea -1);
 		}
 		
 		return new Retorno(Resultado.OK);
@@ -200,7 +192,7 @@ public class Sistema implements ISistema {
 
 	@Override
 	public Retorno ImprimirLinea(int posicionLinea) {
-		if (posicionLinea < 1 || posicionLinea > texto.length() + 1) {
+		if (posicionLinea < 1 || posicionLinea >= texto.length() + 1) {
 			return new Retorno(Resultado.ERROR_1);
 		}
 
