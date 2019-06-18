@@ -224,11 +224,13 @@ public class ISistemaTest {
 		Retorno ret = sis.crearSistemaMensajes(), aux_ret = sis.crearSistemaMensajes();
 		ret = sis.InsertarLinea();
 		ret = sis.InsertarLinea();
+		ret = sis.InsertarLinea();
 		ret = sis.InsertarPalabraEnLinea(1, 1, "Palabra1");
-		ret = sis.InsertarPalabraEnLinea(1, 2, "Palabra3");
-		ret = sis.InsertarPalabraEnLinea(2, 1, "Palabra2");
-		ret = sis.BorrarPalabra(1, 1);
-//		ret = sis.BorrarPalabra(1, 1);
+		ret = sis.InsertarPalabraEnLinea(1, 2, "Palabra2");
+		ret = sis.InsertarPalabraEnLinea(2, 1, "Palabra3");
+		ret = sis.InsertarPalabraEnLinea(3, 1, "Palabra4");
+		ret = sis.InsertarPalabraEnLinea(3, 2, "Palabra5");
+		ret = sis.BorrarPalabra(2, 1);
 		aux_ret = sis.ImprimirTexto();
 		
 		assertEquals(Resultado.OK, ret.resultado);

@@ -1,19 +1,13 @@
 package logic;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import logic.Retorno.Resultado;
 
-public class ISistemaTestPosta {
+public class ISistemaTestFBouza {
 
 	private ISistema sis;
 	private Retorno ret;
@@ -86,7 +80,7 @@ public class ISistemaTestPosta {
 
 		assertEquals(Resultado.OK, sis.BorrarTodo().resultado);
 
-		// Al borrar todo, no deben quedar lï¿½ï¿½neas disponibles
+		// Al borrar todo, no deben quedar líneas disponibles
 		assertEquals(Resultado.ERROR_1, sis.BorrarLinea(1).resultado);
 	}
 
@@ -264,11 +258,11 @@ public class ISistemaTestPosta {
 
 		ret = sis.ImprimirLinea(1);
 		assertEquals(Resultado.OK, ret.resultado);
-		assertTrue(ret.valorString.startsWith("1: Palabra2"));
+		assertTrue(ret.valorString.startsWith("1: Palabra1 Palabra2"));
 
 		ret = sis.ImprimirLinea(2);
 		assertEquals(Resultado.OK, ret.resultado);
-		assertTrue(ret.valorString.startsWith("2:"));
+		assertTrue(ret.valorString.startsWith("2: Palabra2"));
 
 		ret = sis.ImprimirLinea(3);
 		assertEquals(Resultado.OK, ret.resultado);
@@ -286,7 +280,7 @@ public class ISistemaTestPosta {
 		sis.InsertarLinea();
 
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("Mi").resultado);
-		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("corazï¿½ï¿½n").resultado);
+		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("corazón").resultado);
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("palpita").resultado);
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("y").resultado);
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("se").resultado);
@@ -301,7 +295,7 @@ public class ISistemaTestPosta {
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("bandera").resultado);
 		assertEquals(Resultado.ERROR_1, sis.IngresarPalabraDiccionario("y").resultado);
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("esta").resultado);
-		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("pasiï¿½ï¿½n").resultado);
+		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("pasión").resultado);
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("que").resultado);
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("cada").resultado);
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("dia").resultado);
@@ -312,9 +306,9 @@ public class ISistemaTestPosta {
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("vos").resultado);
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("siempre").resultado);
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("florece").resultado);
-		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("aï¿½ï¿½o").resultado);
+		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("año").resultado);
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("a").resultado);
-		assertEquals(Resultado.ERROR_1, sis.IngresarPalabraDiccionario("aï¿½ï¿½o").resultado);
+		assertEquals(Resultado.ERROR_1, sis.IngresarPalabraDiccionario("año").resultado);
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("en").resultado);
 		assertEquals(Resultado.OK, sis.IngresarPalabraDiccionario("primavera").resultado);
 
@@ -330,7 +324,7 @@ public class ISistemaTestPosta {
 		sis.InsertarLinea();
 
 		sis.IngresarPalabraDiccionario("Mi");
-		sis.IngresarPalabraDiccionario("corazï¿½ï¿½n");
+		sis.IngresarPalabraDiccionario("corazón");
 		sis.IngresarPalabraDiccionario("palpita");
 		sis.IngresarPalabraDiccionario("y");
 		sis.IngresarPalabraDiccionario("se");
@@ -344,7 +338,7 @@ public class ISistemaTestPosta {
 		sis.IngresarPalabraDiccionario("tu");
 		sis.IngresarPalabraDiccionario("bandera");
 		sis.IngresarPalabraDiccionario("esta");
-		sis.IngresarPalabraDiccionario("pasiï¿½ï¿½n");
+		sis.IngresarPalabraDiccionario("pasión");
 		sis.IngresarPalabraDiccionario("que");
 		sis.IngresarPalabraDiccionario("cada");
 		sis.IngresarPalabraDiccionario("dia");
@@ -353,7 +347,7 @@ public class ISistemaTestPosta {
 		sis.IngresarPalabraDiccionario("vos");
 		sis.IngresarPalabraDiccionario("siempre");
 		sis.IngresarPalabraDiccionario("florece");
-		sis.IngresarPalabraDiccionario("aï¿½ï¿½o");
+		sis.IngresarPalabraDiccionario("año");
 		sis.IngresarPalabraDiccionario("a");
 		sis.IngresarPalabraDiccionario("en");
 		sis.IngresarPalabraDiccionario("primavera");
@@ -364,7 +358,7 @@ public class ISistemaTestPosta {
 		assertEquals(Resultado.ERROR_1, sis.BorrarPalabraDiccionario("que").resultado);
 
 		assertEquals(Resultado.ERROR_1, sis.BorrarPalabraDiccionario("parque").resultado);
-		assertEquals(Resultado.ERROR_1, sis.BorrarPalabraDiccionario("minorï¿½ï¿½a").resultado);
+		assertEquals(Resultado.ERROR_1, sis.BorrarPalabraDiccionario("minoría").resultado);
 
 	}
 
@@ -378,7 +372,7 @@ public class ISistemaTestPosta {
 		sis.InsertarLinea();
 
 		sis.IngresarPalabraDiccionario("Mi");
-		sis.IngresarPalabraDiccionario("corazï¿½ï¿½n");
+		sis.IngresarPalabraDiccionario("corazón");
 		sis.IngresarPalabraDiccionario("palpita");
 		sis.IngresarPalabraDiccionario("y");
 		sis.IngresarPalabraDiccionario("se");
@@ -392,7 +386,7 @@ public class ISistemaTestPosta {
 		sis.IngresarPalabraDiccionario("tu");
 		sis.IngresarPalabraDiccionario("bandera");
 		sis.IngresarPalabraDiccionario("esta");
-		sis.IngresarPalabraDiccionario("pasiï¿½ï¿½n");
+		sis.IngresarPalabraDiccionario("pasión");
 		sis.IngresarPalabraDiccionario("que");
 		sis.IngresarPalabraDiccionario("cada");
 		sis.IngresarPalabraDiccionario("dia");
@@ -401,7 +395,7 @@ public class ISistemaTestPosta {
 		sis.IngresarPalabraDiccionario("vos");
 		sis.IngresarPalabraDiccionario("siempre");
 		sis.IngresarPalabraDiccionario("florece");
-		sis.IngresarPalabraDiccionario("aï¿½ï¿½o");
+		sis.IngresarPalabraDiccionario("año");
 		sis.IngresarPalabraDiccionario("a");
 		sis.IngresarPalabraDiccionario("en");
 		sis.IngresarPalabraDiccionario("primavera");
@@ -409,7 +403,7 @@ public class ISistemaTestPosta {
 		ret = sis.ImprimirDiccionario();
 		assertEquals(Resultado.OK, ret.resultado);
 		assertTrue(ret.valorString.startsWith(
-				"Mi\na\naï¿½ï¿½o\nbandera\ncada\ncomo\ncorazï¿½ï¿½n\ncrece\ncuando\nde\ndia\nel\nen\nenvuelve\nesta\nextremece\nflorece\nme\nmirasol\npalpita\npasiï¿½ï¿½n\nprimavera\nque\nse\nsiempre\ntu\nvos\ny"));
+				"Mi\na\naño\nbandera\ncada\ncomo\ncorazón\ncrece\ncuando\nde\ndia\nel\nen\nenvuelve\nesta\nextremece\nflorece\nme\nmirasol\npalpita\npasión\nprimavera\nque\nse\nsiempre\ntu\nvos\ny"));
 
 	}
 
@@ -444,8 +438,9 @@ public class ISistemaTestPosta {
 		ret = sis.ImprimirTextoIncorrecto();
 		assertEquals(Resultado.OK, ret.resultado);
 		assertTrue(
-				ret.valorString.startsWith("1: Palabra11 Palabra12 Palabra13\n2: Palabra21 Palabra22\n3: Palabra31"));
+				ret.valorString.startsWith("1: Palabra11 Palabra13\n2:\n3: Palabra31"));
 
 	}
+
 
 }
