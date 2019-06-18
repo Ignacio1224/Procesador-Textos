@@ -183,17 +183,42 @@ public class Sistema implements ISistema {
 
 		linea.deleteAtPosition(posicionPalabra-1);
 		
-//		if (linea.isEmpty()) {
-//			texto.deleteAtPosition(posicionLinea -1);
-//		}
+		// -----------------------------------------------------------------------
+		
+		//if (linea.isEmpty()) {
+		//texto.deleteAtPosition(posicionLinea -1);
+		//}
+		
+		// -----------------------------------------------------------------------
+		// oop 1
 		
 		while (linea != null && !linea.isFull(MAX_CANT_PALABRAS_X_LINEA)) {
-			linea = texto.getObject(++posicionLinea -1);
+			linea = texto.getObject(++posicionLinea -1);  // posicionLinea++ ?
 			if (linea != null) {
 				String palabra = linea.getObject(0);
 				texto.getObject(posicionPalabra -1).addLast(palabra);				
 			}
 		}
+		
+		// -----------------------------------------------------------------------
+		// oop2
+		
+		boolean finalLap = false;
+		while (!finalLap ) {
+			
+			ILista<String> lineaSig = texto.getObject(posicionLinea++  +1);
+			if (lineaSig != null) {
+				String primerPalabraLineaSig = lineaSig.getObject(0);
+				linea.addLast(primerPalabraLineaSig);
+				lineaSig.deleteFirst();
+				linea = lineaSig;
+			}else{
+				linea.deleteFirst();
+				finalLap = true;
+			}	
+		}
+		
+		// -----------------------------------------------------------------------
 		
 		return new Retorno(Resultado.OK);
 	}

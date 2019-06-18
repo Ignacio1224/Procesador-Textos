@@ -9,11 +9,13 @@ public class Lista<T> implements ILista<T> {
 
 	@Override
 	public void addAtPosition(T dato, int pos) {
-		if (_inicio == null || pos == 0) {
+		if(_inicio == null || pos == 0)
+		{
 			_inicio = new NodoLista<T>(dato, _inicio);
 		} else {
 			NodoLista<T> aux = _inicio;
-			while (aux.getSig() != null && pos > 1) {
+			while(aux.getSig()!=null && pos > 1)
+			{
 				aux = aux.getSig();
 			}
 			aux.setSig(new NodoLista<T>(dato, aux.getSig()));
